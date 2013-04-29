@@ -40,12 +40,14 @@ Profane.configure(dictionary: { obscenity: 'obs******' }, use_internal_dictionar
 Profane.configure(dictionary_file: 'config/dictionary.yml', use_internal_dictionary: false)
 ```
 
-If you set a key to nil in the dictionary profane will use the default strategy
+If you set a key to '' in the dictionary profane will use the default strategy
 of overwriting the entire word (exempting punctuation) with '*'. You can pass an
 alternative character to use with the filter_character option.
 ```
 Profane.configure(filter_character: '&')
 ```
+Note that if you want to actually replace words with blank string you can use ''
+as your default character.
 
 ## Usage
 
