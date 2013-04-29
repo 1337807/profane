@@ -1,5 +1,14 @@
-require "profane/version"
+require 'profane/version'
+require 'profane/filter'
 
 module Profane
-  # Your code goes here...
+  @config = {}
+
+  def self.configure(options)
+    @config.merge!(options)
+  end
+
+  def self.config
+    @config
+  end
 end
