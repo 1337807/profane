@@ -16,11 +16,13 @@ module Profane
     end
 
     def profane?(phrase)
-      phrase = phrase.split(' ')
+      phrase = phrase.downcase.split(' ')
 
       dictionary.keys.each do |key|
-        return true if phrase.grep(key)
+        return true unless phrase.grep(/(\b|\W)#{key.downcase}(\b|\W)/).empty?
       end
+
+      false
     end
 
     def cleanse!(word)

@@ -68,15 +68,35 @@ describe 'Profane::Filter' do
   end
 
   context "#profane?" do
+    it "returns false if the phrase is not profane" do
+      filter = Profane::Filter.new
+      filter.profane?('this is not profane').should be_false
+    end
+
     it "detects the presence of words from the default dictionary" do
       filter = Profane::Filter.new
       filter.profane?('fuck').should be_true
     end
 
     it "detects the presence of words from the custom dictionary" do
-      Profane.configure(dictionary: { 'shit' => '' })
+      Profane.configure(dictionary: { 'microsoft' => '' })
       filter = Profane::Filter.new
-      filter.profane?('shit').should be_true
+      filter.profane?('microsoft').should be_true
+    end
+
+    it "ignores case" do
+      filter = Profane::Filter.new
+      filter.profane?('ruby is the SHIT').should be_true
+    end
+
+    it "detects profanity in quotes" do
+      filter = Profane::Filter.new
+      filter.profane?("ruby is the 'SHIT'").should be_true
+    end
+
+    it "detects profanity surrounded by non-word characters" do
+      filter = Profane::Filter.new
+      filter.profane?("ruby is the -SHIT-").should be_true
     end
   end
 end
