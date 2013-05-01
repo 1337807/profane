@@ -3,20 +3,30 @@ require 'profane/version'
 require 'profane/filter'
 
 module Profane
-  @config = {
-    use_internal_dictionary: true
-  }
+  DICTIONARY_PATH = 'config/dictionary.yml'
 
   def self.configure(options)
     config.merge!(options)
   end
 
   def self.config
-    @config
+    @config ||= set_default_config
+  end
+
+  def self.set_default_config
+    @config = { use_internal_dictionary: true }
   end
 
   def self.dictionary
-    @dictionary ||= load_dictionary
+    stringify_keys(load_dictionary)
+  end
+
+  def self.stringify_keys(hash)
+    hash.keys.each do |key|
+      hash[key.to_s] = hash.delete(key)
+    end
+
+    hash
   end
 
   def self.character
@@ -34,14 +44,17 @@ module Profane
   end
 
   def self.load_yaml_dictionary
-    internal_dictionary = YAML.load(File.read('config/dictionary.yml'))
     custom_dictionary = load_custom_yaml_dictionary
 
     if config[:use_internal_dictionary]
-      internal_dictionary.merge custom_dictionary
+      load_internal_yaml_dictionary.merge custom_dictionary
     else
       custom_dictionary
     end
+  end
+
+  def self.load_internal_yaml_dictionary
+    internal_dictionary = YAML.load(File.read(DICTIONARY_PATH))
   end
 
   def self.load_custom_yaml_dictionary

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Profane do
+  before do
+    Profane.set_default_config
+  end
+
   context "without configuration options" do
     it "loads the default dictionary" do
       Profane.dictionary['fuck'].should == ''
