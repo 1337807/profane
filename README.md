@@ -63,6 +63,10 @@ Profane::Filter.profane?('If you come to a fork in the road, take it.')
 => 'false'
 ```
 
+## Thanks
+
+Special thanks to Joseph Hsu (https://github.com/jhsu) and James Tucker (https://github.com/raggi) for their contributions to this gem.
+
 ## Contributing
 
 1. Fork it
