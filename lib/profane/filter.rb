@@ -5,7 +5,6 @@ module Profane
     def initialize
       @dictionary = Profane.dictionary
       @character = Profane.character
-      @dictionary_regex = /#{'(\b' + dictionary.keys.join('\b|\b') + '\b)'}/
     end
 
     def filter(phrase)
@@ -16,32 +15,7 @@ module Profane
       Array(new_phrase).join(' ')
     end
 
-    def one_profane?(phrase)
-      keys = dictionary.keys
-      phrase.split(' ').each { |word| return true if keys.include? word }
-      false
-    end
-
-    def two_profane?(phrase)
-      dictionary.keys.each do |key|
-        return true if phrase.include? " #{key} "
-      end
-      false
-    end
-
-    def three_profane?(phrase)
-      dictionary.keys.each do |key|
-        return true if phrase =~ /\b#{key}\b/
-      end
-      false
-    end
-
-    def four_profane?(phrase)
-      return true if phrase.match(dictionary_regex)
-      false
-    end
-
-    def five_profane?(phrase)
+    def profane?(phrase)
       phrase = phrase.split(' ')
 
       dictionary.keys.each do |key|
