@@ -8,7 +8,7 @@ module Profane
     end
 
     def filter(phrase)
-      new_phrase = phrase.split(/\s+/).map do |word|
+      new_phrase = phrase.split(/\s/).map do |word|
         cleanse!(word)
       end
 
