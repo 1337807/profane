@@ -3,7 +3,7 @@ require 'profane/version'
 require 'profane/filter'
 
 module Profane
-  DICTIONARY_PATH = 'config/dictionary.yml'
+  DICTIONARY_PATH = File.expand_path('../../config/dictionary.yml', __FILE__)
 
   def self.configure(options)
     config.merge!(options)
