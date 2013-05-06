@@ -17,6 +17,20 @@ Or install it yourself as:
 
     $ gem install profane
 
+## Usage
+
+Filter profanity from a bit of text:
+```
+Profane::Filter.filter('Voldemort!')
+=> '*********!')
+```
+
+Detect profanity in a bit of text:
+```
+Profane::Filter.profane?('If you come to a fork in the road, take it.')
+=> false
+```
+
 ## Configuration
 
 You can include words from your own dictionary in a hash or a yaml file, where
@@ -40,28 +54,15 @@ Profane.configure(dictionary: { obscenity: 'obs******' }, use_internal_dictionar
 Profane.configure(dictionary_file: 'config/dictionary.yml', use_internal_dictionary: false)
 ```
 
-If you set a key to '' in the dictionary profane will use the default strategy
+If you set a key to '' (blank string) in the dictionary profane will use the default strategy
 of overwriting the entire word (exempting punctuation) with '*'. You can pass an
 alternative character to use with the filter_character option.
 ```
 Profane.configure(filter_character: '&')
-```
-Note that if you want to actually replace words with blank string you can use ''
-as your default character.
-
-## Usage
-
-Filter profanity from a bit of text:
-```
 Profane::Filter.filter('Voldemort!')
-=> '*********!')
+=> '&&&&&&&&&!')
 ```
-
-Detect profanity in a bit of text:
-```
-Profane::Filter.profane?('If you come to a fork in the road, take it.')
-=> 'false'
-```
+Note that if you want to actually replace words with a blank string you can use '' as your default character.
 
 ## Thanks
 
