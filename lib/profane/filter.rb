@@ -16,6 +16,8 @@ module Profane
     end
 
     def profane?(phrase)
+      return false unless phrase
+
       phrase = phrase.downcase.split(/\s+/)
 
       dictionary.keys.each do |key|

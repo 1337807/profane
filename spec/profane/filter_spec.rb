@@ -73,6 +73,11 @@ describe 'Profane::Filter' do
       filter.profane?('this is not profane').should be_false
     end
 
+    it "returns false given nil" do
+      filter = Profane::Filter.new
+      filter.profane?(nil).should be_false
+    end
+
     it "detects the presence of words from the default dictionary" do
       filter = Profane::Filter.new
       filter.profane?('fuck').should be_true
