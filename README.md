@@ -19,15 +19,20 @@ Or install it yourself as:
 
 ## Usage
 
-Filter profanity from a bit of text:
+To get started create a `Profane::Filter`:
 ```
-Profane::Filter.filter('Voldemort!')
+profanity_filter = Profane::Filter.new
+```
+
+Use the `Profane::Filter#filter` method to replace the naughty bits:
+```
+profanity_filter.filter('Voldemort!')
 => '*********!')
 ```
 
-Detect profanity in a bit of text:
+Use the `Profane::Filter#profane?` method to see check suspicious strings:
 ```
-Profane::Filter.profane?('If you come to a fork in the road, take it.')
+profanity_filter.profane?('If you come to a fork in the road, take it.')
 => false
 ```
 
