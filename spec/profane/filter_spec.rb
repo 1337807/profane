@@ -9,20 +9,20 @@ describe 'Profane::Filter' do
     it "filters words from the dictionary using the default character" do
       filter = Profane::Filter.new
 
-      filter.filter('fuck').should == '****'
+      expect(filter.filter('fuck')).to eql '****'
     end
 
     it "filters words from the dictionary ignoring punctuation" do
       filter = Profane::Filter.new
 
-      filter.filter('fuck!').should == '****!'
+      expect(filter.filter('fuck!')).to eql '****!'
     end
 
     it "filters words from the dictionary using a custom character" do
       Profane.configure(filter_character: '&')
       filter = Profane::Filter.new
 
-      filter.filter('fuck!').should == '&&&&!'
+      expect(filter.filter('fuck!')).to eql '&&&&!'
 
       Profane.configure(filter_character: '*')
     end
@@ -32,21 +32,21 @@ describe 'Profane::Filter' do
         Profane.configure(dictionary: { 'shit' => '' })
         filter = Profane::Filter.new
 
-        filter.filter('shit!?').should == '****!?'
+        expect(filter.filter('shit!?')).to eql '****!?'
       end
 
       it "filters words from the custom dictionary with symbol keys" do
         Profane.configure(dictionary: { :shit => '' })
         filter = Profane::Filter.new
 
-        filter.filter('shit!?').should == '****!?'
+        expect(filter.filter('shit!?')).to eql '****!?'
       end
 
       it "filters words from the default dictionary" do
-        Profane.stub(:load_yaml_dictionary).and_return({ 'shit' => '' })
+        expect(Profane).to receive(:load_yaml_dictionary).and_return({ 'shit' => '' })
         filter = Profane::Filter.new
 
-        filter.filter('shit!?').should == '****!?'
+        expect(filter.filter('shit!?')).to eql '****!?'
       end
     end
 
@@ -57,12 +57,12 @@ describe 'Profane::Filter' do
 
       it "filters words from the custom dictionary" do
         filter = Profane::Filter.new
-        filter.filter('shit!?').should == '****!?'
+        expect(filter.filter('shit!?')).to eql '****!?'
       end
 
       it "doesn't filter words from the default dictionary" do
         filter = Profane::Filter.new
-        filter.filter('fuck!?').should == 'fuck!?'
+        expect(filter.filter('fuck!?')).to eql 'fuck!?'
       end
     end
   end
@@ -70,38 +70,38 @@ describe 'Profane::Filter' do
   context "#profane?" do
     it "returns false if the phrase is not profane" do
       filter = Profane::Filter.new
-      filter.profane?('this is not profane').should be_false
+      expect(filter.profane?('this is not profane')).to be false
     end
 
     it "returns false given nil" do
       filter = Profane::Filter.new
-      filter.profane?(nil).should be_false
+      expect(filter.profane?(nil)).to be false
     end
 
     it "detects the presence of words from the default dictionary" do
       filter = Profane::Filter.new
-      filter.profane?('fuck').should be_true
+      expect(filter.profane?('fuck')).to be true
     end
 
     it "detects the presence of words from the custom dictionary" do
       Profane.configure(dictionary: { 'microsoft' => '' })
       filter = Profane::Filter.new
-      filter.profane?('microsoft').should be_true
+      expect(filter.profane?('microsoft')).to be true
     end
 
     it "ignores case" do
       filter = Profane::Filter.new
-      filter.profane?('ruby is the SHIT').should be_true
+      expect(filter.profane?('ruby is the SHIT')).to be true
     end
 
     it "detects profanity in quotes" do
       filter = Profane::Filter.new
-      filter.profane?("ruby is the 'SHIT'").should be_true
+      expect(filter.profane?("ruby is the 'SHIT'")).to be true
     end
 
     it "detects profanity surrounded by non-word characters" do
       filter = Profane::Filter.new
-      filter.profane?("ruby is the -SHIT-").should be_true
+      expect(filter.profane?("ruby is the -SHIT-")).to be true
     end
   end
 end
